@@ -1,0 +1,441 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Tajawal:wght@400;500;700&display=swap');
+
+:root {
+  --primary-color: #4a6da7;
+  --secondary-color: #8a1538;
+  --accent-color: #f8c291;
+  --text-color: white;
+  --bg-gradient: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  --dark-bg-gradient: linear-gradient(to right, #0a1a20, #162630, #1a3540);
+  --card-bg: rgba(255, 255, 255, 0.2);
+  --highlight-bg: rgba(0, 255, 150, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.2);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --transition-speed: 0.5s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s ease;
+  overflow-x: hidden;
+}
+
+/* Animation for final countdown */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes flash {
+  0% { background: rgba(255, 165, 0, 0.6); }
+  50% { background: rgba(255, 69, 0, 0.8); }
+  100% { background: rgba(255, 165, 0, 0.6); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px #ffcc00; }
+  50% { box-shadow: 0 0 20px #ffcc00; }
+  100% { box-shadow: 0 0 5px #ffcc00; }
+}
+
+@keyframes celebrate {
+  0% { color: #ffcc00; }
+  25% { color: #ff6b6b; }
+  50% { color: #4ecdc4; }
+  75% { color: #ff9ff3; }
+  100% { color: #ffcc00; }
+}
+
+/* Special effects for final countdown */
+.final-countdown {
+  background: linear-gradient(to right, #330000, #550000, #330000);
+  animation: pulse 2s infinite;
+}
+
+.time-reached {
+  background: linear-gradient(to right, #003300, #005500, #003300);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-gradient);
+  color: var(--text-color);
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+  overflow-y: auto;
+  position: relative;
+  transition: background var(--transition-speed) ease;
+}
+
+.container.dark-mode {
+  background: var(--dark-bg-gradient);
+}
+
+.rtl {
+  direction: rtl;
+  font-family: "Tajawal", sans-serif;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.app-controls {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.rtl .app-controls {
+  right: auto;
+  left: 20px;
+}
+
+.icon-button, .language-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-button:hover, .language-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.time-box {
+  background: var(--card-bg);
+  padding: 15px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+  transition: background 0.5s ease-in-out;
+}
+
+.time-box.flashing {
+  animation: flash 1s infinite;
+}
+
+.final-countdown .time-box.flashing {
+  animation: flash 0.5s infinite, shake 0.5s infinite;
+}
+
+.highlight-box {
+  background: var(--highlight-bg);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  max-width: 80%;
+  width: 500px;
+  animation: glow 2s infinite;
+}
+
+.highlight-box p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #ffcc00;
+}
+
+.rtl .icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.label {
+  display: block;
+  font-size: 1rem;
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.message {
+  font-size: 1.5rem;
+  margin: 20px 0;
+  opacity: 0.8;
+}
+
+.time-reached .message {
+  animation: celebrate 2s infinite;
+}
+
+/* New feature cards */
+.feature-cards {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  width: 80%;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 15px;
+  flex: 1;
+  min-width: 250px;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #ffcc00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dua-text {
+  font-style: italic;
+  line-height: 1.8;
+}
+
+/* Quote box */
+.quote-box {
+  background: rgba(74, 109, 167, 0.4);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 20px 0;
+  text-align: center;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+}
+
+.quote {
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Weather info */
+.weather-info {
+  text-align: center;
+  margin: 10px 0;
+  opacity: 0.8;
+}
+
+/* Popup styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  background: var(--bg-gradient);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+.arabic-text {
+  font-family: 'Traditional Arabic', 'Scheherazade', 'Tajawal', serif;
+  font-size: 1.5rem;
+  line-height: 2;
+  text-align: center;
+  margin: 15px 0;
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  background: rgba(74, 109, 167, 0.6);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  background: rgba(74, 109, 167, 0.8);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.info-button {
+  background: rgba(138, 21, 56, 0.6);
+}
+
+.info-button:hover {
+  background: rgba(138, 21, 56, 0.8);
+}
+
+.footer {
+  margin-top: 40px;
+  font-size: 1rem;
+  opacity: 0.6;
+  padding-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.2rem;
+    margin-top: 80px;
+  }
+  
+  .countdown-container {
+    gap: 10px;
+  }
+  
+  .time-box {
+    padding: 10px 15px;
+  }
+  
+  .label {
+    font-size: 0.8rem;
+  }
+  
+  .message {
+    font-size: 1.2rem;
+  }
+  
+  .highlight-box {
+    font-size: 1rem;
+    padding: 10px;
+    width: 95%;
+  }
+  
+  .feature-cards {
+    flex-direction: column;
+    width: 95%;
+  }
+  
+  .card {
+    min-width: auto;
+  }
+  
+  .quote-box {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.8rem;
+  }
+  
+  .countdown-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .app-controls {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .rtl .app-controls {
+    right: auto;
+    left: 10px;
+  }
+}
