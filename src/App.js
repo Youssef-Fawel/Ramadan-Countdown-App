@@ -4,7 +4,7 @@ import "./App.css";
 import countdownSound from "./countdown-sound.mp3";
 import { FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle } from "react-icons/fa";
 
-
+// Translations
 const translations = {
   en: {
     title: "Countdown to",
@@ -14,8 +14,8 @@ const translations = {
     seconds: "Seconds",
     ramadanDay: "Today is Ramadan Day:",
     currentTime: "Current Time:",
-    imsak: "Imsak:",
-    iftar: "Iftar:",
+    imsakLabel: "Imsak:",  
+    iftarLabel: "Iftar:",  
     stayStrong: "Stay strong!",
     comingSoon: "is coming soon.",
     itsTime: "It's time for",
@@ -56,8 +56,8 @@ const translations = {
     seconds: "ثواني",
     ramadanDay: "اليوم هو يوم رمضان:",
     currentTime: "الوقت الحالي:",
-    imsak: "الإمساك:",
-    iftar: "الإفطار:",
+    imsakLabel: "الإمساك:",  
+    iftarLabel: "الإفطار:",  
     stayStrong: "كن قوياً!",
     comingSoon: "قادم قريباً.",
     itsTime: "حان وقت",
@@ -91,6 +91,7 @@ const translations = {
     darkMode: "تبديل الوضع المظلم"
   }
 };
+
 
 
 const getRamadanDay = () => {
@@ -344,7 +345,7 @@ const App = () => {
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
         <p>{t.currentTime} {currentTimeString}</p>
-        <p>{t.imsak} {imsakTimeString} | {t.iftar} {iftarTimeString}</p>
+        <p>{t.imsakLabel} {imsakTimeString} | {t.iftarLabel} {iftarTimeString}</p>
         <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
       </div>
 
