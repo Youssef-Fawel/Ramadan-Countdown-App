@@ -29,6 +29,7 @@ const translations = {
     notStarted: "Ramadan hasn't started yet this year.",
     dailyDua: "Dua of the Day",
     location: "Location: Tunisia",
+    locationNote: "Please verify times for your specific location",
     inspirationalQuote: "The month of Ramadan is the one in which the Quran was revealed as guidance for mankind.",
     todaysFastingTip: "Today's Fasting Tip",
     fastingTips: [
@@ -71,6 +72,7 @@ const translations = {
     notStarted: "لم يبدأ رمضان بعد هذا العام.",
     dailyDua: "دعاء اليوم",
     location: "الموقع: تونس",
+    locationNote: "يرجى التحقق من الأوقات لموقعك المحدد",
     inspirationalQuote: "شهر رمضان الذي أنزل فيه القرآن هدى للناس.",
     todaysFastingTip: "نصيحة الصيام اليوم",
     fastingTips: [
@@ -342,15 +344,17 @@ const App = () => {
         </div>
       </div>
 
-      <div className="highlight-box">
-        <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
-        <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-        <p className="prayer-times">
-           <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
-           <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
-        </p>
-        <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-      </div>
+<div className="highlight-box">
+  <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
+  <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+  <p className="prayer-times">
+    <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
+    <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
+  </p>
+  <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
+  <p className="location-note"><FaInfoCircle className="icon" /> {t.locationNote}</p>
+</div>
+
 
       <p className="message">
         {isTimeReached 
