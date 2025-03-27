@@ -27,7 +27,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Animation for final countdown */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -65,7 +64,6 @@ body {
   100% { color: #ffcc00; }
 }
 
-/* Special effects for final countdown */
 .final-countdown {
   background: linear-gradient(to right, #330000, #550000, #330000);
   animation: pulse 2s infinite;
@@ -189,23 +187,52 @@ body {
   max-width: 80%;
   width: 500px;
   animation: glow 2s infinite;
+  box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 .highlight-box p {
   margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; 
+  flex-wrap: wrap; 
 }
 
-.icon {
-  margin-right: 8px;
-  color: #ffcc00;
+@media (max-width: 768px) {
+  .highlight-box {
+    font-size: 0.95rem;
+    padding: 12px;
+    width: 90%;
+    max-width: 100%;
+  }
+  
+  .highlight-box p {
+    justify-content: flex-start;
+    line-height: 1.5;
+  }
+  
+  .icon {
+    margin-right: 6px;
+    font-size: 0.9em;
+  }
+  
+  .rtl .icon {
+    margin-right: 0;
+    margin-left: 6px;
+  }
 }
 
-.rtl .icon {
-  margin-right: 0;
-  margin-left: 8px;
+@media (max-width: 480px) {
+  .highlight-box {
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 95%;
+    animation: none; 
+  }
+  
+  .highlight-box p {
+    margin: 8px 0;
+  }
 }
 
 .label {
@@ -226,7 +253,6 @@ body {
   animation: celebrate 2s infinite;
 }
 
-/* New feature cards */
 .feature-cards {
   display: flex;
   gap: 20px;
@@ -264,7 +290,6 @@ body {
   line-height: 1.8;
 }
 
-/* Quote box */
 .quote-box {
   background: rgba(74, 109, 167, 0.4);
   padding: 20px;
@@ -281,14 +306,12 @@ body {
   font-size: 1.1rem;
 }
 
-/* Weather info */
 .weather-info {
   text-align: center;
   margin: 10px 0;
   opacity: 0.8;
 }
 
-/* Popup styles */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -332,7 +355,6 @@ body {
   margin: 15px 0;
 }
 
-/* Action buttons */
 .action-buttons {
   display: flex;
   justify-content: center;
@@ -376,7 +398,6 @@ body {
   padding-bottom: 20px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .title {
     font-size: 2.2rem;
