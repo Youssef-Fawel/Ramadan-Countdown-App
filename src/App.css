@@ -178,6 +178,7 @@ body {
   animation: flash 0.5s infinite, shake 0.5s infinite;
 }
 
+/* Keep the original highlight-box styles for desktop */
 .highlight-box {
   background: var(--highlight-bg);
   padding: 15px;
@@ -187,33 +188,55 @@ body {
   max-width: 80%;
   width: 500px;
   animation: glow 2s infinite;
-  box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 .highlight-box p {
   margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: flex-start; 
-  flex-wrap: wrap; 
+  justify-content: center; /* Keep center alignment for desktop */
 }
 
+.icon {
+  margin-right: 8px;
+  color: #ffcc00;
+}
+
+.rtl .icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+/* Only modify for mobile devices */
 @media (max-width: 768px) {
   .highlight-box {
-    font-size: 0.95rem;
+    font-size: 1rem;
     padding: 12px;
     width: 90%;
     max-width: 100%;
   }
   
   .highlight-box p {
-    justify-content: flex-start;
+    justify-content: flex-start; /* Left align on mobile */
     line-height: 1.5;
+    flex-wrap: wrap; /* Allow text to wrap on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-box {
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 95%;
   }
   
+  .highlight-box p {
+    margin: 8px 0;
+  }
+  
+  /* Keep icon styling but adjust spacing slightly for very small screens */
   .icon {
     margin-right: 6px;
-    font-size: 0.9em;
   }
   
   .rtl .icon {
@@ -221,6 +244,7 @@ body {
     margin-left: 6px;
   }
 }
+
 
 @media (max-width: 480px) {
   .highlight-box {
