@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import "./App.css";
 import countdownSound from "./countdown-sound.mp3";
-import { FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle } from "react-icons/fa";
+import { FaTemperatureHigh,FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaClock, FaCloudSun, FaCloudMoon } from "react-icons/fa";
+
 
 const translations = {
   en: {
@@ -91,6 +92,8 @@ const translations = {
   }
 };
 
+
+
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
   const today = new Date();
@@ -106,14 +109,14 @@ const getEventTimes = () => {
   const now = new Date();
   
   const imsakTime = new Date();
-  imsakTime.setHours(4, 37, 0, 0);
-  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 37 )) {
+  imsakTime.setHours(4, 39, 0, 0);
+  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 39 )) {
     imsakTime.setDate(imsakTime.getDate() + 1);
   }
   
   const iftarTime = new Date();
-  iftarTime.setHours(18, 44, 0, 0);
-  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 44)) {
+  iftarTime.setHours(18, 43, 0, 0);
+  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 43)) {
     iftarTime.setDate(iftarTime.getDate() + 1);
   }
   
@@ -341,8 +344,8 @@ const App = () => {
 
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
-        <p>{t.currentTime} {currentTimeString}</p>
-        <p>{t.imsakLabel} {imsakTimeString} | {t.iftarLabel} {iftarTimeString}</p>
+        <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+        <p><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString} | <span style={{ marginLeft: '5px' }}><FaCloudMoon className="icon" /></span> {t.iftarLabel} {iftarTimeString}</p>
         <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
       </div>
 
@@ -359,8 +362,8 @@ const App = () => {
         </div>
         
         <div className="card tip-card">
-          <h3>{t.todaysFastingTip}</h3>
-          <p>{t.fastingTips[dailyTipIndex]}</p>
+        <h3><FaInfoCircle className="icon" style={{ marginRight: '8px' }} /> {t.todaysFastingTip}</h3>
+        <p>{t.fastingTips[dailyTipIndex]}</p>
         </div>
       </div>
 
@@ -369,7 +372,7 @@ const App = () => {
       </div>
 
       <div className="weather-info">
-        <p>{t.weatherInfo}</p>
+      <p><FaTemperatureHigh className="icon" style={{ marginRight: '5px' }} /> {t.weatherInfo}</p>
       </div>
 
       {showQuranPopup && (
