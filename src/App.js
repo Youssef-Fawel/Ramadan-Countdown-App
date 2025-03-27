@@ -109,14 +109,14 @@ const getEventTimes = () => {
   const now = new Date();
   
   const imsakTime = new Date();
-  imsakTime.setHours(4, 39, 0, 0);
-  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 39 )) {
+  imsakTime.setHours(4, 37, 0, 0);
+  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 37 )) {
     imsakTime.setDate(imsakTime.getDate() + 1);
   }
   
   const iftarTime = new Date();
-  iftarTime.setHours(18, 43, 0, 0);
-  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 43)) {
+  iftarTime.setHours(18, 44, 0, 0);
+  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 44)) {
     iftarTime.setDate(iftarTime.getDate() + 1);
   }
   
