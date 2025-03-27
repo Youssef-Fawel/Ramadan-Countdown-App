@@ -299,14 +299,7 @@ body {
     font-size: 0.8em;
     padding: 0 10px;
   }
-
-  .highlight-box p.location-note {
-    justify-content: center;
-    flex-wrap: nowrap;
-  }
 }
-
-
 
 .label {
   display: block;
