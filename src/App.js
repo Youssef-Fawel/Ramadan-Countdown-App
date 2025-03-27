@@ -29,7 +29,7 @@ const translations = {
     notStarted: "Ramadan hasn't started yet this year.",
     dailyDua: "Dua of the Day",
     location: "Location: Tunisia",
-    locationNote: "Please verify times for your location",
+    locationNote: "Please verify times for your specific location",    
     inspirationalQuote: "The month of Ramadan is the one in which the Quran was revealed as guidance for mankind.",
     todaysFastingTip: "Today's Fasting Tip",
     fastingTips: [
