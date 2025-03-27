@@ -257,6 +257,38 @@ body {
     margin: 8px 0;
   }
 }
+.time-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .time-info {
+    justify-content: flex-start;
+    gap: 10px; /* Add space between the time elements */
+  }
+  
+  /* Make the pipe separator more visible on mobile */
+  .time-separator {
+    margin: 0 5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .time-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  /* Hide the pipe separator on very small screens */
+  .time-separator {
+    display: none;
+  }
+}
 
 .label {
   display: block;
