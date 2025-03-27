@@ -258,15 +258,29 @@ body {
 .prayer-times {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
+  justify-content: flex-start; 
+  gap: 15px;
+  width: 100%; 
+}
+
+.prayer-time-item {
+  display: flex;
+  align-items: center;
+}
+
+.rtl .prayer-times {
+  justify-content: flex-end; 
 }
 
 @media (max-width: 480px) {
   .prayer-times {
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .rtl .prayer-times {
+    align-items: flex-end; 
   }
 }
 
