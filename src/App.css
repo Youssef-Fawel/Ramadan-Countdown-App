@@ -264,33 +264,43 @@ body {
   margin-top: 8px;
   font-style: italic;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   text-align: center;
-  white-space: normal;
+  line-height: 1.4;
 }
 
-.location-note .icon {
+.note-icon-container {
+  display: inline-flex;
+  margin-top: 3px; /* Align with first line of text */
   flex-shrink: 0;
+}
+
+.note-icon-container .icon {
   margin-right: 8px;
 }
 
-.rtl .location-note .icon {
+.rtl .note-icon-container .icon {
   margin-right: 0;
   margin-left: 8px;
 }
 
 .note-text {
-  display: inline;
+  display: inline-block;
+  text-align: left;
+}
+
+.rtl .note-text {
+  text-align: right;
 }
 
 @media (max-width: 480px) {
   .location-note {
     font-size: 0.8em;
-    white-space: normal;
-    flex-wrap: nowrap;
+    padding: 0 10px;
   }
-  
+}
+
   .highlight-box p.location-note {
     justify-content: center;
     flex-wrap: nowrap;
