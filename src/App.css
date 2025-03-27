@@ -258,136 +258,71 @@ body {
   }
 }
 
-/* Location Note Banner - Top of page */
-.location-note-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(255, 152, 0, 0.9);
-  color: #000;
+.location-note-highlight {
+  background-color: rgba(255, 152, 0, 0.15);
+  border: 1px solid rgba(255, 152, 0, 0.5);
+  border-radius: 8px;
   padding: 8px 15px;
-  font-size: 0.9rem;
-  font-weight: bold;
+  margin: 10px auto 15px;
+  max-width: 80%;
+  width: 500px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  z-index: 1000;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  animation: pulse 2s infinite;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ff9800;
+  text-align: center;
+  animation: pulse-subtle 2s infinite;
 }
 
-.rtl.location-note-banner {
-  justify-content: flex-end;
-  direction: rtl;
-}
-
-.banner-icon {
-  color: #fff;
+.note-highlight-icon {
+  color: #ffcc00;
   margin-right: 8px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   flex-shrink: 0;
 }
 
-.rtl .banner-icon {
+.rtl .note-highlight-icon {
   margin-right: 0;
   margin-left: 8px;
 }
 
-.banner-text {
+.note-highlight-text {
   font-style: italic;
 }
 
-/* Animation for the banner */
-@keyframes pulse {
+@keyframes pulse-subtle {
   0% {
-    background-color: rgba(255, 152, 0, 0.9);
+    background-color: rgba(255, 152, 0, 0.15);
   }
   50% {
-    background-color: rgba(255, 193, 7, 0.9);
+    background-color: rgba(255, 152, 0, 0.25);
   }
   100% {
-    background-color: rgba(255, 152, 0, 0.9);
+    background-color: rgba(255, 152, 0, 0.15);
   }
 }
 
-/* Adjust the top margin of the container to make room for the banner */
-.container {
-  margin-top: 40px;
-}
-
 @media (max-width: 768px) {
-  .location-note-banner {
-    font-size: 0.8rem;
+  .location-note-highlight {
+    font-size: 0.85rem;
     padding: 6px 10px;
-  }
-  
-  .container {
-    margin-top: 35px;
+    width: 90%;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .location-note-banner {
-    font-size: 0.75rem;
+  .location-note-highlight {
+    font-size: 0.8rem;
     padding: 5px 8px;
-  }
-  
-  .container {
-    margin-top: 30px;
+    width: 95%;
   }
 }
 
-/* Keep the old location-note styles for backward compatibility */
-.location-note {
-  font-size: 0.9em;
-  color: #ff9800;
-  margin-top: 8px;
-  font-style: italic;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  text-align: center;
-  line-height: 1.4;
-}
-
-.note-icon {
-  flex-shrink: 0;
-  color: #ffcc00;
-  margin-top: 3px;
-}
-
-.ltr .note-icon {
-  margin-right: 6px; 
-}
-
-.rtl .note-icon {
-  margin-left: 6px; 
-}
-
-.note-text {
-  display: inline-block;
-}
-
-@media (max-width: 768px) {
-  .location-note {
-    font-size: 0.85em;
-    padding: 0 5px;
-  }
-  
-  .ltr .note-icon {
-    margin-right: 1px;
-  }
-}
-
-@media (max-width: 480px) {
-  .location-note {
-    font-size: 0.8em;
-  }
-  
-  .ltr .note-icon {
-    margin-right: 0px;
-  }
+.container {
+  margin-top: 0;
 }
 
 
