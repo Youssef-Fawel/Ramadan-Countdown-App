@@ -270,37 +270,41 @@ body {
   line-height: 1.4;
 }
 
-.note-icon-container {
-  display: inline-flex;
-  margin-top: 2px; 
+.note-icon {
+  margin-right: 4px;
+  margin-top: 3px;
   flex-shrink: 0;
+  color: #ffcc00;
 }
 
-.note-icon-container .icon {
-  margin-right: 2px;
-}
-
-.rtl .note-icon-container .icon {
+.rtl .note-icon {
   margin-right: 0;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .note-text {
   display: inline-block;
-  text-align: center;
 }
 
-.rtl .note-text {
-  text-align: right;
+@media (max-width: 768px) {
+  .location-note {
+    font-size: 0.85em;
+    padding: 0 5px;
+  }
+  
+  .note-icon {
+    margin-right: 2px; 
+  }
+  
+  .rtl .note-icon {
+    margin-right: 0;
+    margin-left: 2px;
+  }
 }
 
 @media (max-width: 480px) {
   .location-note {
     font-size: 0.8em;
-    padding: 0 10px;
-  }
-    .note-icon-container .icon {
-    margin-right: 3px;
   }
 }
 
