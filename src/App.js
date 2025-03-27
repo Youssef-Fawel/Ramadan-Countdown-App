@@ -352,9 +352,8 @@ const App = () => {
     <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
   </p>
   <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-  <p className="location-note"><FaInfoCircle className="icon" /> {t.locationNote}</p>
+  <p className="location-note"><FaInfoCircle className="icon" /> <span className="note-text">{t.locationNote}</span></p>
 </div>
-
 
       <p className="message">
         {isTimeReached 
