@@ -271,15 +271,17 @@ body {
 }
 
 .note-icon {
-  margin-right: 4px;
-  margin-top: 3px;
   flex-shrink: 0;
   color: #ffcc00;
+  margin-top: 3px;
+}
+
+.ltr .note-icon {
+  margin-right: 2px; 
 }
 
 .rtl .note-icon {
-  margin-right: 0;
-  margin-left: 4px;
+  margin-left: 6px; 
 }
 
 .note-text {
@@ -292,19 +294,18 @@ body {
     padding: 0 5px;
   }
   
-  .note-icon {
-    margin-right: 2px; 
-  }
-  
-  .rtl .note-icon {
-    margin-right: 0;
-    margin-left: 2px;
+  .ltr .note-icon {
+    margin-right: 1px;
   }
 }
 
 @media (max-width: 480px) {
   .location-note {
     font-size: 0.8em;
+  }
+  
+  .ltr .note-icon {
+    margin-right: 0px;
   }
 }
 
