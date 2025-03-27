@@ -272,7 +272,7 @@ body {
 
 .note-icon-container {
   display: inline-flex;
-  margin-top: 3px; /* Align with first line of text */
+  margin-top: 2px; 
   flex-shrink: 0;
 }
 
