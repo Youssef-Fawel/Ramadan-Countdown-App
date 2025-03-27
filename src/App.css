@@ -178,7 +178,6 @@ body {
   animation: flash 0.5s infinite, shake 0.5s infinite;
 }
 
-/* Keep the original highlight-box styles for desktop */
 .highlight-box {
   background: var(--highlight-bg);
   padding: 15px;
@@ -194,7 +193,7 @@ body {
   margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: center; /* Keep center alignment for desktop */
+  justify-content: center; 
 }
 
 .icon {
@@ -207,7 +206,6 @@ body {
   margin-left: 8px;
 }
 
-/* Only modify for mobile devices */
 @media (max-width: 768px) {
   .highlight-box {
     font-size: 1rem;
@@ -217,9 +215,9 @@ body {
   }
   
   .highlight-box p {
-    justify-content: flex-start; /* Left align on mobile */
+    justify-content: flex-start; 
     line-height: 1.5;
-    flex-wrap: wrap; /* Allow text to wrap on mobile */
+    flex-wrap: wrap; 
   }
 }
 
@@ -234,7 +232,6 @@ body {
     margin: 8px 0;
   }
   
-  /* Keep icon styling but adjust spacing slightly for very small screens */
   .icon {
     margin-right: 6px;
   }
@@ -255,38 +252,6 @@ body {
   
   .highlight-box p {
     margin: 8px 0;
-  }
-}
-.time-info {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .time-info {
-    justify-content: flex-start;
-    gap: 10px; /* Add space between the time elements */
-  }
-  
-  /* Make the pipe separator more visible on mobile */
-  .time-separator {
-    margin: 0 5px;
-  }
-}
-
-@media (max-width: 480px) {
-  .time-info {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-  
-  /* Hide the pipe separator on very small screens */
-  .time-separator {
-    display: none;
   }
 }
 
