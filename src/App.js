@@ -4,7 +4,6 @@ import "./App.css";
 import countdownSound from "./countdown-sound.mp3";
 import { FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle } from "react-icons/fa";
 
-// Translations
 const translations = {
   en: {
     title: "Countdown to",
@@ -91,8 +90,6 @@ const translations = {
     darkMode: "تبديل الوضع المظلم"
   }
 };
-
-
 
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
