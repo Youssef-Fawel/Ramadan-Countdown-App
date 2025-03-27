@@ -28,7 +28,7 @@ const translations = {
     footer: "Designed with ❤️ for Ramadan 2025 by Youssef Fawel",
     notStarted: "Ramadan hasn't started yet this year.",
     dailyDua: "Dua of the Day",
-    location: "Location: Sousse, Tunisia",
+    location: "Location: Tunisia",
     inspirationalQuote: "The month of Ramadan is the one in which the Quran was revealed as guidance for mankind.",
     todaysFastingTip: "Today's Fasting Tip",
     fastingTips: [
@@ -70,7 +70,7 @@ const translations = {
     footer: "صُمم بكل ❤️ لرمضان 2025 من تصميم يوسف فوال",
     notStarted: "لم يبدأ رمضان بعد هذا العام.",
     dailyDua: "دعاء اليوم",
-    location: "الموقع: سوسة، تونس",
+    location: "الموقع: تونس",
     inspirationalQuote: "شهر رمضان الذي أنزل فيه القرآن هدى للناس.",
     todaysFastingTip: "نصيحة الصيام اليوم",
     fastingTips: [
