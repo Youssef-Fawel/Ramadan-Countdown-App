@@ -345,7 +345,10 @@ const App = () => {
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
         <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-        <p><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString} <span style={{ marginLeft: '5px' }}><FaCloudMoon className="icon" /></span> {t.iftarLabel} {iftarTimeString}</p>
+        <p className="prayer-times">
+           <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
+           <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
+        </p>
         <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
       </div>
 
