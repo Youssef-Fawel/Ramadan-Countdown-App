@@ -353,11 +353,10 @@ const App = () => {
   </p>
   <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
   <div className="location-note">
-    <span className="note-icon-container"><FaInfoCircle className="icon" /></span>
+    <FaInfoCircle className="note-icon" />
     <span className="note-text">{t.locationNote}</span>
   </div>
 </div>
-
 
       <p className="message">
         {isTimeReached 
