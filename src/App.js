@@ -308,6 +308,11 @@ const App = () => {
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
       
+     <div className={`location-note-banner ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+        <FaInfoCircle className="banner-icon" />
+        <span className="banner-text">{t.locationNote}</span>
+      </div>
+      
       <div className="app-controls">
         <button 
           className="icon-button"
@@ -328,7 +333,6 @@ const App = () => {
       <h1 className="title">
         {isTimeReached ? `${t[celebrationEvent]} ${t.titleTime}` : `${t.title} ${t[targetEvent]}`}
       </h1>
-
       <div className="countdown-container">
         <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
           {isTimeReached ? "00" : hours}
@@ -343,20 +347,16 @@ const App = () => {
           <span className="label">{t.seconds}</span>
         </div>
       </div>
-
-<div className="highlight-box">
-  <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
-  <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-  <p className="prayer-times">
-    <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
-    <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
-  </p>
-  <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-  <div className={`location-note ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-    <FaInfoCircle className="note-icon" />
-    <span className="note-text">{t.locationNote}</span>
-  </div>
-</div>
+      
+      <div className="highlight-box">
+        <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
+        <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+        <p className="prayer-times">
+          <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
+          <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
+        </p>
+        <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
+      </div>
 
       <p className="message">
         {isTimeReached 
