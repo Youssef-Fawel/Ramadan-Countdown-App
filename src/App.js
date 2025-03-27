@@ -306,11 +306,7 @@ const App = () => {
 
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
-      
-     <div className={`location-note-banner ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-        <FaInfoCircle className="banner-icon" />
-        <span className="banner-text">{t.locationNote}</span>
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}  
       </div>
       
       <div className="app-controls">
