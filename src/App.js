@@ -352,7 +352,7 @@ const App = () => {
     <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
   </p>
   <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-  <div className="location-note">
+  <div className={`location-note ${language === 'ar' ? 'rtl' : 'ltr'}`}>
     <FaInfoCircle className="note-icon" />
     <span className="note-text">{t.locationNote}</span>
   </div>
