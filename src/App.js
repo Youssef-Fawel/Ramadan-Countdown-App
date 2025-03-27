@@ -299,15 +299,14 @@ const App = () => {
     };
   }, []);
 
-  const { imsakTimeString, iftarTimeString } = getEventTimes();
+ const { imsakTimeString, iftarTimeString } = getEventTimes();
   const isFlashing = totalSeconds <= 60 && totalSeconds > 0;
   const t = translations[language];
   const currentTimeString = currentTime.toLocaleTimeString();
 
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}  
-      </div>
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
       
       <div className="app-controls">
         <button 
@@ -343,11 +342,12 @@ const App = () => {
           <span className="label">{t.seconds}</span>
         </div>
       </div>
-
+      
+      {/* Location Note - Moved between countdown and highlight box */}
       <div className={`location-note-highlight ${language === 'ar' ? 'rtl' : 'ltr'}`}>
         <FaInfoCircle className="note-highlight-icon" />
         <span className="note-highlight-text">{t.locationNote}</span>
-      </div>     
+      </div>
       
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
@@ -358,13 +358,14 @@ const App = () => {
         </p>
         <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
       </div>
-
+      
       <p className="message">
         {isTimeReached 
           ? (celebrationEvent === "imsak" ? t.imsakMessage : t.iftarMessage)
           : `${targetEvent === "imsak" ? t.imsakCountdown : t.iftarCountdown} ${t.comingSoon}`}
       </p>
-
+      
+      {/* Rest of your component remains the same */}
       <div className="feature-cards">
         <div className="card dua-card">
           <h3><FaQuran className="icon" /> {t.dailyDua}</h3>
@@ -372,19 +373,19 @@ const App = () => {
         </div>
         
         <div className="card tip-card">
-        <h3><FaInfoCircle className="icon" style={{ marginRight: '8px' }} /> {t.todaysFastingTip}</h3>
-        <p>{t.fastingTips[dailyTipIndex]}</p>
+          <h3><FaInfoCircle className="icon" style={{ marginRight: '8px' }} /> {t.todaysFastingTip}</h3>
+          <p>{t.fastingTips[dailyTipIndex]}</p>
         </div>
       </div>
-
+      
       <div className="quote-box">
         <p className="quote">{t.inspirationalQuote}</p>
       </div>
-
+      
       <div className="weather-info">
-      <p><FaTemperatureHigh className="icon" style={{ marginRight: '5px' }} /> {t.weatherInfo}</p>
+        <p><FaTemperatureHigh className="icon" style={{ marginRight: '5px' }} /> {t.weatherInfo}</p>
       </div>
-
+      
       {showQuranPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
@@ -399,7 +400,7 @@ const App = () => {
           </div>
         </div>
       )}
-
+      
       <div className="action-buttons">
         <button 
           className="action-button"
@@ -415,7 +416,7 @@ const App = () => {
           <FaInfoCircle className="icon" /> Fasting Guide
         </button>
       </div>
-
+      
       <footer className="footer">
         {t.footer}
       </footer>
@@ -424,6 +425,3 @@ const App = () => {
     </div>
   );
 };
-
-export default App;
-
