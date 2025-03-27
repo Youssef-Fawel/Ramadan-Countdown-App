@@ -187,13 +187,15 @@ body {
   max-width: 80%;
   width: 500px;
   animation: glow 2s infinite;
+  text-align: center; /* Ensure text is centered */
 }
 
 .highlight-box p {
   margin: 5px 0;
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center; /* Center alignment for all paragraphs */
+  flex-wrap: wrap;
 }
 
 .icon {
@@ -206,6 +208,16 @@ body {
   margin-left: 8px;
 }
 
+/* Prayer times specific styling */
+.prayer-times {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the prayer times */
+  gap: 15px;
+  width: 100%;
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .highlight-box {
     font-size: 1rem;
@@ -215,9 +227,9 @@ body {
   }
   
   .highlight-box p {
-    justify-content: flex-start; 
+    justify-content: center; /* Keep centered on mobile */
     line-height: 1.5;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
   }
 }
 
@@ -240,47 +252,12 @@ body {
     margin-right: 0;
     margin-left: 6px;
   }
-}
-
-
-@media (max-width: 480px) {
-  .highlight-box {
-    font-size: 0.9rem;
-    padding: 10px;
-    width: 95%;
-  }
   
-  .highlight-box p {
-    margin: 8px 0;
-  }
-}
-
-.prayer-times {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; 
-  gap: 15px;
-  width: 100%; 
-}
-
-.prayer-time-item {
-  display: flex;
-  align-items: center;
-}
-
-.rtl .prayer-times {
-  justify-content: flex-end; 
-}
-
-@media (max-width: 480px) {
+  /* For very small screens, stack the prayer times but keep them centered */
   .prayer-times {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 8px;
-  }
-  
-  .rtl .prayer-times {
-    align-items: flex-end; 
   }
 }
 
