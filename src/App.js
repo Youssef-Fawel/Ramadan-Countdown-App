@@ -343,6 +343,11 @@ const App = () => {
           <span className="label">{t.seconds}</span>
         </div>
       </div>
+
+      <div className={`location-note-highlight ${language === 'ar' ? 'rtl' : 'ltr'}`}>
+        <FaInfoCircle className="note-highlight-icon" />
+        <span className="note-highlight-text">{t.locationNote}</span>
+      </div>     
       
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
