@@ -263,13 +263,40 @@ body {
   color: #ff9800;
   margin-top: 8px;
   font-style: italic;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
+
+.location-note .icon {
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+
+.rtl .location-note .icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.note-text {
+  display: inline;
 }
 
 @media (max-width: 480px) {
   .location-note {
     font-size: 0.8em;
+    white-space: normal;
+    flex-wrap: nowrap;
+  }
+  
+  .highlight-box p.location-note {
+    justify-content: center;
+    flex-wrap: nowrap;
   }
 }
+
 
 
 .label {
