@@ -258,6 +258,87 @@ body {
   }
 }
 
+/* Location Note Banner - Top of page */
+.location-note-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(255, 152, 0, 0.9);
+  color: #000;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+}
+
+.rtl.location-note-banner {
+  justify-content: flex-end;
+  direction: rtl;
+}
+
+.banner-icon {
+  color: #fff;
+  margin-right: 8px;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.rtl .banner-icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.banner-text {
+  font-style: italic;
+}
+
+/* Animation for the banner */
+@keyframes pulse {
+  0% {
+    background-color: rgba(255, 152, 0, 0.9);
+  }
+  50% {
+    background-color: rgba(255, 193, 7, 0.9);
+  }
+  100% {
+    background-color: rgba(255, 152, 0, 0.9);
+  }
+}
+
+/* Adjust the top margin of the container to make room for the banner */
+.container {
+  margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+  .location-note-banner {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+  
+  .container {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-note-banner {
+    font-size: 0.75rem;
+    padding: 5px 8px;
+  }
+  
+  .container {
+    margin-top: 30px;
+  }
+}
+
+/* Keep the old location-note styles for backward compatibility */
 .location-note {
   font-size: 0.9em;
   color: #ff9800;
@@ -308,6 +389,7 @@ body {
     margin-right: 0px;
   }
 }
+
 
 .label {
   display: block;
