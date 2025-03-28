@@ -10,8 +10,11 @@ const translations = {
     title: "Countdown to",
     titleTime: "Time! 🌙",
     hours: "Hours",
+    hour: "Hour",
     minutes: "Minutes",
+    minute: "Minute",
     seconds: "Seconds",
+    second: "Second",
     ramadanDay: "Today is Ramadan Day:",
     currentTime: "Current Time:",
     imsakLabel: "Imsak:",  
@@ -53,8 +56,11 @@ const translations = {
     title: "العد التنازلي إلى",
     titleTime: "حان الوقت! 🌙",
     hours: "ساعات",
+    hour: "ساعة", 
     minutes: "دقائق",
+    minute: "دقيقة", 
     seconds: "ثواني",
+    second: "ثانية",
     ramadanDay: "اليوم هو يوم رمضان:",
     currentTime: "الوقت الحالي:",
     imsakLabel: "الإمساك:",  
@@ -303,6 +309,10 @@ const App = () => {
   const isFlashing = totalSeconds <= 60 && totalSeconds > 0;
   const t = translations[language];
   const currentTimeString = currentTime.toLocaleTimeString();
+  
+  const hoursNum = parseInt(hours, 10);
+  const minutesNum = parseInt(minutes, 10);
+  const secondsNum = parseInt(seconds, 10);
 
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
@@ -331,19 +341,18 @@ const App = () => {
       <div className="countdown-container">
         <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
           {isTimeReached ? "00" : hours}
-          <span className="label">{t.hours}</span>
+          <span className="label">{hoursNum === 1 ? t.hour : t.hours}</span>
         </div>
         <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
           {isTimeReached ? "00" : minutes}
-          <span className="label">{t.minutes}</span>
+          <span className="label">{minutesNum === 1 ? t.minute : t.minutes}</span>
         </div>
         <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
           {isTimeReached ? "00" : seconds}
-          <span className="label">{t.seconds}</span>
+          <span className="label">{secondsNum === 1 ? t.second : t.seconds}</span>
         </div>
       </div>
       
-      {/* Location Note - Moved between countdown and highlight box */}
       <div className={`location-note-highlight ${language === 'ar' ? 'rtl' : 'ltr'}`}>
         <FaInfoCircle className="note-highlight-icon" />
         <span className="note-highlight-text">{t.locationNote}</span>
@@ -365,7 +374,6 @@ const App = () => {
           : `${targetEvent === "imsak" ? t.imsakCountdown : t.iftarCountdown} ${t.comingSoon}`}
       </p>
       
-      {/* Rest of your component remains the same */}
       <div className="feature-cards">
         <div className="card dua-card">
           <h3><FaQuran className="icon" /> {t.dailyDua}</h3>
