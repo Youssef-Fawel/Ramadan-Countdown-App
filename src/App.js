@@ -111,8 +111,8 @@ const getEventTimes = () => {
   const now = new Date();
   
   const imsakTime = new Date();
-  imsakTime.setHours(4, 34, 0, 0);
-  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 34 )) {
+  imsakTime.setHours(0, 38, 0, 0);
+  if (now.getHours() > 0 || (now.getHours() === 0 && now.getMinutes() >= 38 )) {
     imsakTime.setDate(imsakTime.getDate() + 1);
   }
   
