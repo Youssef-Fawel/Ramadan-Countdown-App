@@ -111,14 +111,14 @@ const getEventTimes = () => {
   const now = new Date();
   
   const imsakTime = new Date();
-  imsakTime.setHours(4, 36, 0, 0);
-  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 36 )) {
+  imsakTime.setHours(4, 34, 0, 0);
+  if (now.getHours() > 4 || (now.getHours() === 4 && now.getMinutes() >= 34 )) {
     imsakTime.setDate(imsakTime.getDate() + 1);
   }
   
   const iftarTime = new Date();
-  iftarTime.setHours(18, 45, 0, 0);
-  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 45)) {
+  iftarTime.setHours(18, 46, 0, 0);
+  if (now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 46)) {
     iftarTime.setDate(iftarTime.getDate() + 1);
   }
   
