@@ -157,7 +157,7 @@ const translations = {
 
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
-  const endRamadan = new Date("2025-03-29");
+  const endRamadan = new Date("2025-03-30");
   const today = new Date();
   
   if (today < startRamadan) {
@@ -197,7 +197,7 @@ const getEventTimes = () => {
 
 const isEid = () => {
   const today = new Date();
-  const eidDay = new Date("2025-03-30"); 
+  const eidDay = new Date("2025-04-01"); 
   
   return today.getDate() === eidDay.getDate() &&
          today.getMonth() === eidDay.getMonth() &&
