@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import "./App.css";
 import countdownSound from "./countdown-sound.mp3";
-import { FaTemperatureHigh,FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaClock, FaCloudSun, FaCloudMoon } from "react-icons/fa";
-
+import { FaTemperatureHigh, FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaClock, FaCloudSun, FaCloudMoon, FaGift, FaPray, FaHandsHelping } from "react-icons/fa";
 
 const translations = {
   en: {
@@ -17,8 +16,8 @@ const translations = {
     second: "Second",
     ramadanDay: "Today is Ramadan Day:",
     currentTime: "Current Time:",
-    imsakLabel: "Imsak:",  
-    iftarLabel: "Iftar:",  
+    imsakLabel: "Imsak:",
+    iftarLabel: "Iftar:",
     stayStrong: "Stay strong!",
     comingSoon: "is coming soon.",
     itsTime: "It's time for",
@@ -32,7 +31,7 @@ const translations = {
     notStarted: "Ramadan hasn't started yet this year.",
     dailyDua: "Dua of the Day",
     location: "Location: Tunisia",
-    locationNote: "Please verify times for your specific location",    
+    locationNote: "Please verify times for your specific location",
     inspirationalQuote: "The month of Ramadan is the one in which the Quran was revealed as guidance for mankind.",
     todaysFastingTip: "Today's Fasting Tip",
     fastingTips: [
@@ -50,21 +49,50 @@ const translations = {
       "O Allah, make my fast the fast of those who fast sincerely and my standing in prayer the standing of those who stand in devotion"
     ],
     weatherInfo: "Weather: 24°C, Clear Sky",
-    darkMode: "Toggle Dark Mode"
+    darkMode: "Toggle Dark Mode",
+    // Eid-related translations
+    eidMubarak: "Eid Mubarak! 🌙",
+    eidMessage: "May Allah accept your fasts, prayers, and good deeds.",
+    eidTitle: "Happy Eid al-Fitr!",
+    eidDescription: "Celebrating the end of Ramadan with joy and gratitude.",
+    eidTips: "Eid Traditions",
+    eidTipsList: [
+      "Perform Eid prayer in the morning",
+      "Give Zakat al-Fitr before Eid prayer",
+      "Wear your best clothes",
+      "Exchange greetings with family and friends",
+      "Share food and gifts with others",
+      "Visit relatives and neighbors"
+    ],
+    eidDuas: [
+      "تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ",
+      "May Allah accept (good deeds) from us and from you",
+      "اللَّهُمَّ أَعِدْهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ",
+      "O Allah, bring it back to us with prosperity, faith, safety, and Islam"
+    ],
+    eidActivities: "Eid Activities",
+    eidActivitiesList: [
+      "Attend Eid prayer",
+      "Visit family and friends",
+      "Give gifts to children",
+      "Prepare special meals",
+      "Donate to charity",
+      "Call distant relatives"
+    ]
   },
   ar: {
     title: "العد التنازلي إلى",
     titleTime: "حان الوقت! 🌙",
     hours: "ساعات",
-    hour: "ساعة", 
+    hour: "ساعة",
     minutes: "دقائق",
-    minute: "دقيقة", 
+    minute: "دقيقة",
     seconds: "ثواني",
     second: "ثانية",
     ramadanDay: "اليوم هو يوم رمضان:",
     currentTime: "الوقت الحالي:",
-    imsakLabel: "الإمساك:",  
-    iftarLabel: "الإفطار:",  
+    imsakLabel: "الإمساك:",
+    iftarLabel: "الإفطار:",
     stayStrong: "كن قوياً!",
     comingSoon: "قادم قريباً.",
     itsTime: "حان وقت",
@@ -96,11 +124,38 @@ const translations = {
       "اللهم اجعل صيامي صيام المخلصين وقيامي قيام المتعبدين"
     ],
     weatherInfo: "الطقس: 24 درجة مئوية، سماء صافية",
-    darkMode: "تبديل الوضع المظلم"
+    darkMode: "تبديل الوضع المظلم",
+    // Eid-related translations
+    eidMubarak: "عيد مبارك! 🌙",
+    eidMessage: "تقبل الله منا ومنكم صالح الأعمال",
+    eidTitle: "عيد الفطر السعيد!",
+    eidDescription: "نحتفل بنهاية شهر رمضان بفرح وامتنان",
+    eidTips: "تقاليد العيد",
+    eidTipsList: [
+      "أداء صلاة العيد في الصباح",
+      "إخراج زكاة الفطر قبل صلاة العيد",
+      "ارتداء أفضل الملابس",
+      "تبادل التهاني مع العائلة والأصدقاء",
+      "مشاركة الطعام والهدايا مع الآخرين",
+      "زيارة الأقارب والجيران"
+    ],
+    eidDuas: [
+      "تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ",
+      "تقبل الله منا ومنكم",
+      "اللَّهُمَّ أَعِدْهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ وَالسَّلَامَةِ وَالْإِسْلَامِ",
+      "اللهم أعده علينا باليمن والإيمان والسلامة والإسلام"
+    ],
+    eidActivities: "أنشطة العيد",
+    eidActivitiesList: [
+      "حضور صلاة العيد",
+      "زيارة العائلة والأصدقاء",
+      "تقديم الهدايا للأطفال",
+      "إعداد وجبات خاصة",
+      "التبرع للجمعيات الخيرية",
+      "الاتصال بالأقارب البعيدين"
+    ]
   }
 };
-
-
 
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
@@ -118,7 +173,6 @@ const getRamadanDay = () => {
   const diffTime = today - startRamadan;
   return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 };
-
 
 const getEventTimes = () => {
   const now = new Date();
@@ -143,13 +197,25 @@ const getEventTimes = () => {
   };
 };
 
+// Check if today is Eid
+const isEid = () => {
+  // For testing purposes, you can set this to true to see the Eid mode
+  // In production, use the actual date check
+  const today = new Date();
+  const eidDay = new Date("2024-04-10"); // Set this to the actual Eid date
+  
+  // Check if today is Eid day (or after Ramadan ends)
+  return today.getDate() === eidDay.getDate() && 
+         today.getMonth() === eidDay.getMonth() && 
+         today.getFullYear() === eidDay.getFullYear();
+};
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [ramadanDay, setRamadanDay] = useState(getRamadanDay());
   const [language, setLanguage] = useState("en");
   
-  const [targetEvent, setTargetEvent] = useState("iftar"); 
+  const [targetEvent, setTargetEvent] = useState("iftar");
   const [targetTime, setTargetTime] = useState(null);
   const [hours, setHours] = useState("00");
   const [minutes, setMinutes] = useState("00");
@@ -165,11 +231,30 @@ const App = () => {
   const [dailyTipIndex, setDailyTipIndex] = useState(0);
   const [showQuranPopup, setShowQuranPopup] = useState(false);
   
+  // Add new state for Eid mode
+  const [eidMode, setEidMode] = useState(isEid());
+  const [showEidMessage, setShowEidMessage] = useState(false);
+  
   const audioRef = useRef(null);
   const celebrationTimerRef = useRef(null);
   const timerRef = useRef(null);
   const forceUpdateRef = useRef(false);
-
+  
+  // Check for Eid day on component mount and when date changes
+  useEffect(() => {
+    setEidMode(isEid());
+    
+    // If it's Eid, show confetti and Eid message
+        if (isEid() && !showEidMessage) {
+      setShowConfetti(true);
+      setShowEidMessage(true);
+      
+      // Hide confetti after 20 seconds
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 20000);
+    }
+  }, [currentTime]);
 
   useEffect(() => {
     const updateEventTimes = () => {
@@ -203,7 +288,6 @@ const App = () => {
     return () => clearInterval(eventTimer);
   }, []);
 
-
   useEffect(() => {
     const clockTimer = setInterval(() => {
       setCurrentTime(new Date());
@@ -213,13 +297,11 @@ const App = () => {
     return () => clearInterval(clockTimer);
   }, []);
 
-
   useEffect(() => {
     const day = new Date().getDate();
     setDailyDuaIndex(day % translations[language].duas.length);
     setDailyTipIndex(day % translations[language].fastingTips.length);
   }, [language, currentTime]);
-
 
   useEffect(() => {
     if (darkMode) {
@@ -228,7 +310,6 @@ const App = () => {
       document.body.classList.remove('dark-mode');
     }
   }, [darkMode]);
-
 
   useEffect(() => {
     if (!targetTime) return;
@@ -288,7 +369,7 @@ const App = () => {
             setTargetEvent("iftar");
             setTargetTime(iftarTime);
           }
-        }, 120000); 
+        }, 120000);
       }
     };
     
@@ -312,15 +393,126 @@ const App = () => {
     };
   }, []);
 
- const { imsakTimeString, iftarTimeString } = getEventTimes();
+  const { imsakTimeString, iftarTimeString } = getEventTimes();
   const isFlashing = totalSeconds <= 60 && totalSeconds > 0;
   const t = translations[language];
-  const currentTimeString = currentTime.toLocaleTimeString();
+  const currentTimeString = currentTime.toLocaleTimeString("en-US", { 
+    hour: "2-digit", 
+    minute: "2-digit", 
+    second: "2-digit", 
+    hour12: true 
+  });
   
   const hoursNum = parseInt(hours, 10);
   const minutesNum = parseInt(minutes, 10);
   const secondsNum = parseInt(seconds, 10);
 
+  // Render Eid mode UI if it's Eid day
+  if (eidMode) {
+    return (
+      <div className={`container eid-mode ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
+        {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={true} numberOfPieces={500} />}
+        
+        <div className="app-controls">
+          <button 
+            className="icon-button"
+            onClick={() => setDarkMode(!darkMode)}
+            aria-label={t.darkMode}
+          >
+            {darkMode ? <FaSun /> : <FaMoon />}
+          </button>
+          
+          <button 
+            className="language-button"
+            onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+          >
+            {language === "en" ? "العربية" : "English"}
+          </button>
+        </div>
+        
+        <div className="eid-header">
+          <h1 className="eid-title">{t.eidMubarak}</h1>
+          <p className="eid-subtitle">{t.eidMessage}</p>
+        </div>
+        
+        <div className="highlight-box eid-highlight">
+          <p><FaCalendarAlt className="icon" /> {t.eidTitle}</p>
+          <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+          <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
+        </div>
+        
+        <div className="eid-cards">
+          <div className="card eid-card">
+            <h3><FaPray className="icon" /> {t.eidDuas[0]}</h3>
+            <p className="dua-text">{t.eidDuas[1]}</p>
+            <p className="dua-text arabic-text">{t.eidDuas[2]}</p>
+            <p className="dua-text">{t.eidDuas[3]}</p>
+          </div>
+        </div>
+        
+        <div className="feature-cards">
+          <div className="card eid-tips-card">
+            <h3><FaGift className="icon" /> {t.eidTips}</h3>
+            <ul className="eid-list">
+              {t.eidTipsList.map((tip, index) => (
+                <li key={index}>{tip}</li>
+              ))}
+            </ul>
+          </div>
+          
+          <div className="card eid-activities-card">
+            <h3><FaHandsHelping className="icon" /> {t.eidActivities}</h3>
+            <ul className="eid-list">
+              {t.eidActivitiesList.map((activity, index) => (
+                <li key={index}>{activity}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        
+        <div className="quote-box eid-quote">
+          <p className="quote">{t.eidDescription}</p>
+        </div>
+        
+        <div className="action-buttons">
+          <button 
+            className="action-button"
+            onClick={() => setShowQuranPopup(true)}
+          >
+            <FaQuran className="icon" /> Quran Verse
+          </button>
+          
+          <button 
+            className="action-button info-button"
+            onClick={() => window.open("https://islamqa.info/en/categories/very-important/eid", "_blank")}
+          >
+            <FaInfoCircle className="icon" /> Eid Guide
+          </button>
+        </div>
+        
+        {showQuranPopup && (
+          <div className="popup-overlay">
+            <div className="popup-content">
+              <button className="close-button" onClick={() => setShowQuranPopup(false)}>×</button>
+              <h2>Quran Verse for Eid</h2>
+              <p className="arabic-text">
+                وَلِتُكْمِلُوا الْعِدَّةَ وَلِتُكَبِّرُوا اللَّهَ عَلَىٰ مَا هَدَاكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ
+              </p>
+              <p>
+                "And [wants] for you to complete the period and to glorify Allah for that [to] which He has guided you; and perhaps you will be grateful." (Al-Baqarah 2:185)
+              </p>
+            </div>
+          </div>
+        )}
+        
+        <footer className="footer">
+          {t.footer}
+        </footer>
+      </div>
+    );
+  }
+
+  // Regular Ramadan mode UI
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
       {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
@@ -406,16 +598,16 @@ const App = () => {
           <div className="popup-content">
             <button className="close-button" onClick={() => setShowQuranPopup(false)}>×</button>
             <h2>Quran Verse of the Day</h2>
-            <p className="arabic-text">
+                      <p className="arabic-text">
               شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ
             </p>
             <p>
-              "The month of Ramadan is that in which was revealed the Quran, a guidance for the people and clear proofs of guidance and criterion." (Al-Baqarah 2:185)
+              "The month of Ramadan is that in which was revealed the Quran, a guidance for mankind and clear proofs for guidance and criterion." (Al-Baqarah 2:185)
             </p>
           </div>
         </div>
       )}
-      
+
       <div className="action-buttons">
         <button 
           className="action-button"
@@ -426,19 +618,20 @@ const App = () => {
         
         <button 
           className="action-button info-button"
-          onClick={() => window.open("https://islamqa.info/en/categories/very-important/fasting", "_blank")}
+          onClick={() => window.open("https://islamqa.info/en/categories/very-important/ramadan", "_blank")}
         >
-          <FaInfoCircle className="icon" /> Fasting Guide
+          <FaInfoCircle className="icon" /> Ramadan Guide
         </button>
       </div>
-      
+
+      <audio ref={audioRef} src={countdownSound} loop />
+
       <footer className="footer">
         {t.footer}
       </footer>
-      
-      <audio ref={audioRef} src={countdownSound} loop />
     </div>
   );
 };
 
 export default App;
+
