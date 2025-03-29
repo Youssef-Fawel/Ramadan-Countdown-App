@@ -104,10 +104,17 @@ const translations = {
 
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
+  const endRamadan = new Date("2025-03-30");
   const today = new Date();
+  
   if (today < startRamadan) {
     return "Ramadan hasn't started yet this year.";
   }
+  
+  if (today > endRamadan) {
+    return "Ramadan has ended for this year.";
+  }
+  
   const diffTime = today - startRamadan;
   return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 };
