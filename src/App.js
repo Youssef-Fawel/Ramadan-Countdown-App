@@ -155,7 +155,6 @@ const translations = {
   }
 };
 
-const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
   const endRamadan = new Date("2025-03-30");
   const today = new Date();
@@ -165,6 +164,10 @@ const getRamadanDay = () => {
   }
   
   if (today > endRamadan) {
+    const eidEndDate = new Date("2025-04-03");
+    if (today <= eidEndDate) {
+      return "Eid al-Fitr";
+    }
     return "Ramadan has ended for this year.";
   }
   
@@ -197,13 +200,12 @@ const getEventTimes = () => {
 
 const isEid = () => {
   const today = new Date();
-  const eidDay = new Date("2025-04-01"); 
+  const endRamadan = new Date("2025-03-30");
+  const eidEndDate = new Date("2025-04-03");
   
-  return today.getDate() === eidDay.getDate() &&
-         today.getMonth() === eidDay.getMonth() &&
-         today.getFullYear() === eidDay.getFullYear();
+  // Check if today is after Ramadan ends and within the Eid period
+  return today > endRamadan && today <= eidEndDate;
 };
-
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -234,19 +236,21 @@ const App = () => {
   const timerRef = useRef(null);
   const forceUpdateRef = useRef(false);
   
-  useEffect(() => {
-  setEidMode(isEid());
-        
-  if (isEid() && !showEidMessage) {
+ useEffect(() => {
+  const ramadanStatus = getRamadanDay();
+  const isEidPeriod = isEid();
+  
+  setEidMode(isEidPeriod || ramadanStatus === "Eid al-Fitr");
+  
+  if ((isEidPeriod || ramadanStatus === "Eid al-Fitr") && !showEidMessage) {
     setShowConfetti(true);
     setShowEidMessage(true);
-        
+    
     setTimeout(() => {
       setShowConfetti(false);
-    }, 200000);
+    }, 200000); 
   }
-}, [currentTime, showEidMessage]); 
-
+}, [currentTime, showEidMessage]);
 
   useEffect(() => {
     const updateEventTimes = () => {
