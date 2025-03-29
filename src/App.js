@@ -197,12 +197,13 @@ const getEventTimes = () => {
 
 const isEid = () => {
   const today = new Date();
-  const eidDay = new Date("2025-03-29"); /
+  const eidDay = new Date("2025-03-29"); 
   
-  return today.getDate() === eidDay.getDate() && 
-         today.getMonth() === eidDay.getMonth() && 
+  return today.getDate() === eidDay.getDate() &&
+         today.getMonth() === eidDay.getMonth() &&
          today.getFullYear() === eidDay.getFullYear();
 };
+
 
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
