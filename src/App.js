@@ -50,7 +50,6 @@ const translations = {
     ],
     weatherInfo: "Weather: 24°C, Clear Sky",
     darkMode: "Toggle Dark Mode",
-    // Eid-related translations
     eidMubarak: "Eid Mubarak! 🌙",
     eidMessage: "May Allah accept your fasts, prayers, and good deeds.",
     eidTitle: "Happy Eid al-Fitr!",
@@ -125,7 +124,6 @@ const translations = {
     ],
     weatherInfo: "الطقس: 24 درجة مئوية، سماء صافية",
     darkMode: "تبديل الوضع المظلم",
-    // Eid-related translations
     eidMubarak: "عيد مبارك! 🌙",
     eidMessage: "تقبل الله منا ومنكم صالح الأعمال",
     eidTitle: "عيد الفطر السعيد!",
@@ -159,7 +157,7 @@ const translations = {
 
 const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
-  const endRamadan = new Date("2025-03-30");
+  const endRamadan = new Date("2025-03-29");
   const today = new Date();
   
   if (today < startRamadan) {
@@ -197,14 +195,10 @@ const getEventTimes = () => {
   };
 };
 
-// Check if today is Eid
 const isEid = () => {
-  // For testing purposes, you can set this to true to see the Eid mode
-  // In production, use the actual date check
   const today = new Date();
-  const eidDay = new Date("2024-04-10"); // Set this to the actual Eid date
+  const eidDay = new Date("2025-03-29"); /
   
-  // Check if today is Eid day (or after Ramadan ends)
   return today.getDate() === eidDay.getDate() && 
          today.getMonth() === eidDay.getMonth() && 
          today.getFullYear() === eidDay.getFullYear();
@@ -231,7 +225,6 @@ const App = () => {
   const [dailyTipIndex, setDailyTipIndex] = useState(0);
   const [showQuranPopup, setShowQuranPopup] = useState(false);
   
-  // Add new state for Eid mode
   const [eidMode, setEidMode] = useState(isEid());
   const [showEidMessage, setShowEidMessage] = useState(false);
   
@@ -240,16 +233,13 @@ const App = () => {
   const timerRef = useRef(null);
   const forceUpdateRef = useRef(false);
   
-  // Check for Eid day on component mount and when date changes
   useEffect(() => {
     setEidMode(isEid());
     
-    // If it's Eid, show confetti and Eid message
         if (isEid() && !showEidMessage) {
       setShowConfetti(true);
       setShowEidMessage(true);
       
-      // Hide confetti after 20 seconds
       setTimeout(() => {
         setShowConfetti(false);
       }, 20000);
@@ -407,7 +397,6 @@ const App = () => {
   const minutesNum = parseInt(minutes, 10);
   const secondsNum = parseInt(seconds, 10);
 
-  // Render Eid mode UI if it's Eid day
   if (eidMode) {
     return (
       <div className={`container eid-mode ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
