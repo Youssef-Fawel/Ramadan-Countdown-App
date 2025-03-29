@@ -235,17 +235,18 @@ const App = () => {
   const forceUpdateRef = useRef(false);
   
   useEffect(() => {
-    setEidMode(isEid());
-    
-        if (isEid() && !showEidMessage) {
-      setShowConfetti(true);
-      setShowEidMessage(true);
-      
-      setTimeout(() => {
-        setShowConfetti(false);
-      }, 20000);
-    }
-  }, [currentTime]);
+  setEidMode(isEid());
+        
+  if (isEid() && !showEidMessage) {
+    setShowConfetti(true);
+    setShowEidMessage(true);
+        
+    setTimeout(() => {
+      setShowConfetti(false);
+    }, 200000);
+  }
+}, [currentTime, showEidMessage]); 
+
 
   useEffect(() => {
     const updateEventTimes = () => {
