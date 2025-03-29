@@ -197,7 +197,7 @@ const getEventTimes = () => {
 
 const isEid = () => {
   const today = new Date();
-  const eidDay = new Date("2025-03-29"); 
+  const eidDay = new Date("2025-03-30"); 
   
   return today.getDate() === eidDay.getDate() &&
          today.getMonth() === eidDay.getMonth() &&
