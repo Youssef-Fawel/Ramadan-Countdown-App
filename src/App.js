@@ -31,6 +31,7 @@ const translations = {
     notStarted: "Ramadan hasn't started yet this year.",
     dailyDua: "Dua of the Day",
     location: "Location: Tunisia",
+    eidPrayer: "Eid Prayer:",
     locationNote: "Please verify times for your specific location",
     inspirationalQuote: "The month of Ramadan is the one in which the Quran was revealed as guidance for mankind.",
     todaysFastingTip: "Today's Fasting Tip",
@@ -105,6 +106,7 @@ const translations = {
     notStarted: "لم يبدأ رمضان بعد هذا العام.",
     dailyDua: "دعاء اليوم",
     location: "الموقع: تونس",
+    eidPrayer: "صلاة العيد:",
     locationNote: "يرجى التحقق من الأوقات لموقعك المحدد",
     inspirationalQuote: "شهر رمضان الذي أنزل فيه القرآن هدى للناس.",
     todaysFastingTip: "نصيحة الصيام اليوم",
@@ -176,6 +178,12 @@ const getRamadanDay = () => {
   return Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
 };
 
+const getEidPrayerTime = () => {
+  const eidPrayerTime = new Date();
+  eidPrayerTime.setHours(6, 58, 0, 0);
+  return eidPrayerTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+};
+
 const getEventTimes = () => {
   const now = new Date();
   
@@ -240,6 +248,7 @@ const App = () => {
   
   const [eidMode, setEidMode] = useState(isEid());
   const [showEidMessage, setShowEidMessage] = useState(false);
+  const eidPrayerTimeString = getEidPrayerTime();
   
   const audioRef = useRef(null);
   const celebrationTimerRef = useRef(null);
@@ -474,11 +483,12 @@ const App = () => {
           <p className="eid-subtitle">{t.eidMessage}</p>
         </div>
         
-        <div className="highlight-box eid-highlight">
-          <p><FaCalendarAlt className="icon" /> {t.eidTitle}</p>
-          <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-          <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-        </div>
+<div className="highlight-box eid-highlight">
+  <p><FaCalendarAlt className="icon" /> {t.eidTitle}</p>
+  <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+  <p><FaPray className="icon" /> Eid Prayer: {eidPrayerTimeString}</p>
+  <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
+</div>
         
         <div className="eid-cards">
           <div className="card eid-card">
