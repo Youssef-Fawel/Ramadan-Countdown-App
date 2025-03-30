@@ -142,6 +142,62 @@ body {
   transform: translateY(-2px);
 }
 
+.title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 2;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+.time-box {
+  background: var(--card-bg);
+  padding: 15px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+  transition: background 0.5s ease-in-out;
+}
+
+.time-box.flashing {
+  animation: flash 1s infinite;
+}
+
+.final-countdown .time-box.flashing {
+  animation: flash 0.5s infinite, shake 0.5s infinite;
+}
+
+.highlight-box {
+  background: var(--highlight-bg);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  margin: 20px 0;
+  max-width: 80%;
+  width: 500px;
+  animation: glow 2s infinite;
+  text-align: center; 
+}
+
+.highlight-box p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  flex-wrap: wrap;
+}
+
 .icon {
   margin-right: 8px;
   color: #ffcc00;
@@ -152,17 +208,152 @@ body {
   margin-left: 8px;
 }
 
-/* Info container */
-.info-container {
+.prayer-times {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .highlight-box {
+    font-size: 1rem;
+    padding: 12px;
+    width: 90%;
+    max-width: 100%;
+  }
+  
+  .highlight-box p {
+    justify-content: center; 
+    line-height: 1.5;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlight-box {
+    font-size: 0.9rem;
+    padding: 10px;
+    width: 95%;
+  }
+  
+  .highlight-box p {
+    margin: 8px 0;
+  }
+  
+  .icon {
+    margin-right: 6px;
+  }
+  
+  .rtl .icon {
+    margin-right: 0;
+    margin-left: 6px;
+  }
+  
+  .prayer-times {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.location-note-highlight {
+  background-color: rgba(255, 152, 0, 0.15);
+  border: 1px solid rgba(255, 152, 0, 0.5);
+  border-radius: 8px;
+  padding: 8px 15px;
+  margin: 10px auto 15px;
+  max-width: 80%;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #ff9800;
+  text-align: center;
+  animation: pulse-subtle 2s infinite;
+}
+
+.note-highlight-icon {
+  color: #ffcc00;
+  margin-right: 8px;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.rtl .note-highlight-icon {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.note-highlight-text {
+  font-style: italic;
+}
+
+@keyframes pulse-subtle {
+  0% {
+    background-color: rgba(255, 152, 0, 0.15);
+  }
+  50% {
+    background-color: rgba(255, 152, 0, 0.25);
+  }
+  100% {
+    background-color: rgba(255, 152, 0, 0.15);
+  }
+}
+
+@media (max-width: 768px) {
+  .location-note-highlight {
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    width: 90%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .location-note-highlight {
+    font-size: 0.8rem;
+    padding: 5px 8px;
+    width: 95%;
+  }
+}
+
+.container {
+  margin-top: 0;
+}
+
+
+.label {
+  display: block;
+  font-size: 1rem;
+  margin-top: 5px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.message {
+  font-size: 1.5rem;
+  margin: 20px 0;
+  opacity: 0.8;
+}
+
+.time-reached .message {
+  animation: celebrate 2s infinite;
+}
+
+.feature-cards {
+  display: flex;
   gap: 20px;
   margin: 20px 0;
   width: 80%;
   max-width: 800px;
+  flex-wrap: wrap;
 }
 
-.info-box, .tip-box {
+.card {
   background: var(--card-bg);
   border-radius: 10px;
   padding: 15px;
@@ -172,19 +363,12 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.info-box p {
-  margin: 8px 0;
-  display: flex;
-  align-items: center;
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
-.location-note {
-  font-size: 0.9em;
-  color: #ff9800;
-  font-style: italic;
-}
-
-.tip-box h3 {
+.card h3 {
   margin-bottom: 10px;
   color: #ffcc00;
   display: flex;
@@ -192,117 +376,55 @@ body {
   justify-content: center;
 }
 
-/* Countdown container */
-.countdown-container {
-  text-align: center;
-  background: var(--card-bg);
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0px 8px 16px var(--shadow-color);
+.dua-text {
+  font-style: italic;
+  line-height: 1.8;
+}
+
+.quote-box {
+  background: rgba(74, 109, 167, 0.4);
+  padding: 20px;
+  border-radius: 10px;
   margin: 20px 0;
+  text-align: center;
   width: 80%;
   max-width: 800px;
-}
-
-.countdown-title {
-  font-size: 2.2rem;
-  margin-bottom: 20px;
-  color: #ffcc00;
-}
-
-.countdown-timer {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.countdown-box {
-  background: var(--card-bg);
-  padding: 15px 30px;
-  border-radius: 10px;
-  text-align: center;
   box-shadow: 0px 4px 10px var(--shadow-color);
-  transition: background 0.5s ease-in-out;
 }
 
-.countdown-number {
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
+.quote {
+  font-style: italic;
+  font-size: 1.1rem;
 }
 
-.countdown-label {
-  display: block;
-  font-size: 1rem;
-  margin-top: 5px;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.countdown-message {
-  font-size: 1.5rem;
-  margin: 20px 0;
+.weather-info {
+  text-align: center;
+  margin: 10px 0;
   opacity: 0.8;
 }
 
-.flashing {
-  animation: flash 1s infinite;
-}
-
-/* Celebration container */
-.celebration-container {
-  text-align: center;
-  background: var(--card-bg);
-  border-radius: 15px;
-  padding: 30px;
-  box-shadow: 0px 8px 16px var(--shadow-color);
-  margin: 20px 0;
-  width: 80%;
-  max-width: 800px;
-  animation: pulse 2s infinite;
-}
-
-.celebration-title {
-  font-size: 3rem;
-  margin-bottom: 20px;
-  color: #2ecc71;
-  animation: celebrate 2s infinite;
-}
-
-.celebration-message {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #ffcc00;
-}
-
-.celebration-instructions {
-  font-size: 1.2rem;
-  color: white;
-}
-
-/* Footer */
-.footer {
-  margin-top: 40px;
-  font-size: 1rem;
-  opacity: 0.6;
-  padding-bottom: 20px;
-}
-
-/* Quran popup */
-.quran-popup {
+.popup-overlay {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--bg-gradient);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   z-index: 1000;
-  max-width: 90%;
-  width: 500px;
   animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  background: var(--bg-gradient);
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .close-button {
@@ -316,11 +438,6 @@ body {
   color: white;
 }
 
-.rtl .close-button {
-  right: auto;
-  left: 10px;
-}
-
 .arabic-text {
   font-family: 'Traditional Arabic', 'Scheherazade', 'Tajawal', serif;
   font-size: 1.5rem;
@@ -329,79 +446,69 @@ body {
   margin: 15px 0;
 }
 
-/* Eid and Ramadan ended styles */
-.eid-container, .ramadan-ended-container, .not-started-container {
-  text-align: center;
-  background: var(--card-bg);
-  border-radius: 15px;
-  padding: 40px;
-  box-shadow: 0px 8px 16px var(--shadow-color);
-  margin: 60px 0;
-  width: 80%;
-  max-width: 800px;
-}
-
-.eid-title {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-  color: #2ecc71;
-  animation: celebrate 3s infinite;
-}
-
-.eid-message {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
-  color: #ffcc00;
-}
-
-.highlight-box {
-  background: var(--highlight-bg);
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  margin: 20px 0;
-  max-width: 80%;
-  width: 500px;
-  animation: glow 2s infinite;
-  text-align: center;
-}
-
-.highlight-box p {
-  margin: 5px 0;
+.action-buttons {
   display: flex;
-  align-items: center;
   justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
   flex-wrap: wrap;
 }
 
+.action-button {
+  background: rgba(74, 109, 167, 0.6);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px var(--shadow-color);
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  background: rgba(74, 109, 167, 0.8);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.info-button {
+  background: rgba(138, 21, 56, 0.6);
+}
+
+.info-button:hover {
+  background: rgba(138, 21, 56, 0.8);
+}
+
+.footer {
+  margin-top: 40px;
+  font-size: 1rem;
+  opacity: 0.6;
+  padding-bottom: 20px;
+}
+
 @media (max-width: 768px) {
-  .countdown-title {
-    font-size: 1.8rem;
+  .title {
+    font-size: 2.2rem;
+    margin-top: 80px;
   }
   
-  .countdown-timer {
+  .countdown-container {
     gap: 10px;
   }
   
-  .countdown-box {
+  .time-box {
     padding: 10px 15px;
   }
   
-  .countdown-number {
-    font-size: 2.5rem;
-  }
-  
-  .countdown-label {
+  .label {
     font-size: 0.8rem;
   }
   
-  .countdown-message {
+  .message {
     font-size: 1.2rem;
-  }
-  
-  .info-container, .countdown-container, .celebration-container, 
-  .eid-container, .ramadan-ended-container, .not-started-container {
-    width: 95%;
   }
   
   .highlight-box {
@@ -410,24 +517,28 @@ body {
     width: 95%;
   }
   
-  .info-box, .tip-box {
+  .feature-cards {
+    flex-direction: column;
+    width: 95%;
+  }
+  
+  .card {
     min-width: auto;
-    width: 100%;
+  }
+  
+  .quote-box {
+    width: 95%;
   }
 }
 
 @media (max-width: 480px) {
-  .countdown-title {
-    font-size: 1.5rem;
+  .title {
+    font-size: 1.8rem;
   }
   
-  .countdown-timer {
+  .countdown-container {
     flex-wrap: wrap;
     justify-content: center;
-  }
-  
-  .countdown-number {
-    font-size: 2rem;
   }
   
   .app-controls {
@@ -439,12 +550,4 @@ body {
     right: auto;
     left: 10px;
   }
-  
-  .celebration-title, .eid-title {
-    font-size: 2.5rem;
-  }
-  
-  .celebration-message, .eid-message {
-    font-size: 1.2rem;
-  }
-}
+} 
