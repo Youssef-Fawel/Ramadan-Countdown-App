@@ -201,10 +201,9 @@ const getEventTimes = () => {
 
 const isEid = () => {
   const today = new Date();
-  const endRamadan = new Date("2025-03-30");
+  const endRamadan = new Date("2025-04-01");
   const eidEndDate = new Date("2025-04-03");
   
-  // Check if today is after Ramadan ends and within the Eid period
   return today > endRamadan && today <= eidEndDate;
 };
 
