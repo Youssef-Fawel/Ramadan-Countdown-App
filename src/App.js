@@ -157,7 +157,7 @@ const translations = {
 
  const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
-  const endRamadan = new Date("2025-03-31");
+  const endRamadan = new Date("2025-04-01");
   const today = new Date();
   
   if (today < startRamadan) {
