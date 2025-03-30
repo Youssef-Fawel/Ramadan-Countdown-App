@@ -155,7 +155,7 @@ const translations = {
   }
 };
 
- const getRamadanDay = () => {
+const getRamadanDay = () => {
   const startRamadan = new Date("2025-03-01");
   const endRamadan = new Date("2025-04-01");
   const today = new Date();
@@ -199,12 +199,22 @@ const getEventTimes = () => {
   };
 };
 
+// New function to check if today's Iftar has passed
+const isTodayIftarPassed = () => {
+  const now = new Date();
+  const iftarTime = new Date();
+  iftarTime.setHours(18, 47, 0, 0);
+  
+  return now.getHours() > 18 || (now.getHours() === 18 && now.getMinutes() >= 47);
+};
+
 const isEid = () => {
   const today = new Date();
   const endRamadan = new Date("2025-04-01");
   const eidEndDate = new Date("2025-04-03");
   
-  return today > endRamadan && today <= eidEndDate;
+  // Also consider today's Iftar as the start of Eid
+  return (today > endRamadan && today <= eidEndDate) || isTodayIftarPassed();
 };
 
 const App = () => {
@@ -235,25 +245,32 @@ const App = () => {
   const celebrationTimerRef = useRef(null);
   const timerRef = useRef(null);
   const forceUpdateRef = useRef(false);
-  
- useEffect(() => {
-  const ramadanStatus = getRamadanDay();
-  const isEidPeriod = isEid();
-  
-  setEidMode(isEidPeriod || ramadanStatus === "Eid al-Fitr");
-  
-  if ((isEidPeriod || ramadanStatus === "Eid al-Fitr") && !showEidMessage) {
-    setShowConfetti(true);
-    setShowEidMessage(true);
+ 
+  useEffect(() => {
+    const ramadanStatus = getRamadanDay();
+    const isEidPeriod = isEid();
     
-    setTimeout(() => {
-      setShowConfetti(false);
-    }, 200000); 
-  }
-}, [currentTime, showEidMessage]);
+    // Check if today's Iftar has passed to show Eid message
+    setEidMode(isEidPeriod || ramadanStatus === "Eid al-Fitr" || isTodayIftarPassed());
+    
+    if ((isEidPeriod || ramadanStatus === "Eid al-Fitr" || isTodayIftarPassed()) && !showEidMessage) {
+      setShowConfetti(true);
+      setShowEidMessage(true);
+      
+      setTimeout(() => {
+        setShowConfetti(false);
+      }, 200000);
+    }
+  }, [currentTime, showEidMessage]);
 
   useEffect(() => {
     const updateEventTimes = () => {
+      // If today's Iftar has passed, don't update event times anymore
+      if (isTodayIftarPassed()) {
+        setEidMode(true);
+        return;
+      }
+      
       const { imsakTime, iftarTime } = getEventTimes();
       const now = new Date();
       
@@ -286,12 +303,24 @@ const App = () => {
 
   useEffect(() => {
     const clockTimer = setInterval(() => {
-      setCurrentTime(new Date());
+      const newTime = new Date();
+      setCurrentTime(newTime);
       setRamadanDay(getRamadanDay());
+      
+      // Check if Iftar time has passed to switch to Eid mode
+      if (isTodayIftarPassed() && !eidMode) {
+        setEidMode(true);
+        setShowConfetti(true);
+        setShowEidMessage(true);
+        
+        setTimeout(() => {
+          setShowConfetti(false);
+        }, 200000);
+      }
     }, 1000);
     
     return () => clearInterval(clockTimer);
-  }, []);
+  }, [eidMode]);
 
   useEffect(() => {
     const day = new Date().getDate();
@@ -308,9 +337,17 @@ const App = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    if (!targetTime) return;
+    if (!targetTime || eidMode) return;
     
     const updateCountdown = () => {
+      // If today's Iftar has passed, switch to Eid mode
+      if (isTodayIftarPassed()) {
+        setEidMode(true);
+        setShowConfetti(true);
+        setShowEidMessage(true);
+        return;
+      }
+      
       const now = new Date();
       const difference = targetTime - now;
       const totalSecs = Math.floor(difference / 1000);
@@ -353,6 +390,13 @@ const App = () => {
           setShowConfetti(false);
           document.body.classList.remove('time-reached');
           
+          // If this was Iftar, switch to Eid mode instead of next event
+          if (targetEvent === "iftar") {
+            setEidMode(true);
+            setShowEidMessage(true);
+            return;
+          }
+          
           forceUpdateRef.current = true;
           const nextEvent = targetEvent === "imsak" ? "iftar" : "imsak";
           console.log(`Celebration ended. Switching from ${targetEvent} to ${nextEvent}`);
@@ -379,7 +423,7 @@ const App = () => {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [targetTime, isTimeReached, targetEvent]);
+  }, [targetTime, isTimeReached, targetEvent, eidMode]);
 
   useEffect(() => {
     return () => {
@@ -456,7 +500,7 @@ const App = () => {
           </div>
           
           <div className="card eid-activities-card">
-            <h3><FaHandsHelping className="icon" /> {t.eidActivities}</h3>
+                        <h3><FaHandsHelping className="icon" /> {t.eidActivities}</h3>
             <ul className="eid-list">
               {t.eidActivitiesList.map((activity, index) => (
                 <li key={index}>{activity}</li>
@@ -506,7 +550,6 @@ const App = () => {
       </div>
     );
   }
-
   // Regular Ramadan mode UI
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
@@ -593,7 +636,8 @@ const App = () => {
           <div className="popup-content">
             <button className="close-button" onClick={() => setShowQuranPopup(false)}>×</button>
             <h2>Quran Verse of the Day</h2>
-                      <p className="arabic-text">
+            
+            <p className="arabic-text">
               شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ
             </p>
             <p>
@@ -602,7 +646,6 @@ const App = () => {
           </div>
         </div>
       )}
-
       <div className="action-buttons">
         <button 
           className="action-button"
@@ -618,9 +661,7 @@ const App = () => {
           <FaInfoCircle className="icon" /> Ramadan Guide
         </button>
       </div>
-
       <audio ref={audioRef} src={countdownSound} loop />
-
       <footer className="footer">
         {t.footer}
       </footer>
