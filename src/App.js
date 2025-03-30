@@ -401,20 +401,21 @@ const App = () => {
           </button>
         </div>
         
-        <div className="ramadan-ended-container">
-          <h1>{t.ramadanEnded}</h1>
-          
-          <div className="highlight-box">
-            <p><FaCalendarAlt className="icon" /> {t.currentTime} {currentTimeString}</p>
-            <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-        </div>
-        
-        <footer className="footer">
-          {t.footer}
-        </footer>
-      </div>
-    );
-  }
+<div className="ramadan-ended-container">
+  <h1>{t.ramadanEnded}</h1>
+  
+  <div className="highlight-box">
+    <p><FaCalendarAlt className="icon" /> {t.currentTime} {currentTimeString}</p>
+    <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
+  </div>
+</div>
+
+<footer className="footer">
+  {t.footer}
+</footer>
+</div>
+);
+}
 
   // Render message if Ramadan hasn't started yet
   if (ramadanDay === "notStarted") {
