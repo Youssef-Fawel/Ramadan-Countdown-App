@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import "./App.css";
 import countdownSound from "./countdown-sound.mp3";
-import { FaTemperatureHigh, FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaClock, FaCloudSun, FaCloudMoon, FaGift, FaPray, FaHandsHelping } from "react-icons/fa";
+import { FaTemperatureHigh, FaMoon, FaSun, FaQuran, FaCalendarAlt, FaMapMarkerAlt, FaInfoCircle, FaClock, FaCloudSun, FaCloudMoon, FaGift, FaPray, FaHandsHelping, FaCalendarCheck } from "react-icons/fa";
 
 const translations = {
   en: {
@@ -14,6 +14,8 @@ const translations = {
     minute: "Minute",
     seconds: "Seconds",
     second: "Second",
+    days: "Days",
+    day: "Day",
     ramadanDay: "Today is Ramadan Day:",
     currentTime: "Current Time:",
     imsakLabel: "Imsak:",
@@ -78,7 +80,10 @@ const translations = {
       "Prepare special meals",
       "Donate to charity",
       "Call distant relatives"
-    ]
+    ],
+    siteClosing: "Site closing in:",
+    siteClosingMessage: "Thank you for visiting! This site will be available again for Ramadan 2026.",
+    untilNextRamadan: "Until Next Ramadan"
   },
   ar: {
     title: "العد التنازلي إلى",
@@ -89,6 +94,8 @@ const translations = {
     minute: "دقيقة",
     seconds: "ثواني",
     second: "ثانية",
+    days: "أيام",
+    day: "يوم",
     ramadanDay: "اليوم هو يوم رمضان:",
     currentTime: "الوقت الحالي:",
     imsakLabel: "الإمساك:",
@@ -153,7 +160,10 @@ const translations = {
       "إعداد وجبات خاصة",
       "التبرع للجمعيات الخيرية",
       "الاتصال بالأقارب البعيدين"
-    ]
+    ],
+    siteClosing: "إغلاق الموقع في:",
+    siteClosingMessage: "شكرا لزيارتكم! سيكون هذا الموقع متاحًا مرة أخرى لرمضان 2026.",
+    untilNextRamadan: "حتى رمضان القادم"
   }
 };
 
@@ -225,6 +235,18 @@ const isEid = () => {
   return (today > endRamadan && today <= eidEndDate) || isTodayIftarPassed();
 };
 
+const isEidOver = () => {
+  const today = new Date();
+  const eidEndDate = new Date("2025-04-03");
+  eidEndDate.setHours(23, 59, 59, 999);
+  
+  return today > eidEndDate;
+};
+
+const getNextRamadanDate = () => {
+  return new Date("2026-03-01");
+};
+
 const App = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [ramadanDay, setRamadanDay] = useState(getRamadanDay());
@@ -250,6 +272,13 @@ const App = () => {
   const [showEidMessage, setShowEidMessage] = useState(false);
   const eidPrayerTimeString = getEidPrayerTime();
   
+  // New state variables for site closing countdown
+  const [eidOver, setEidOver] = useState(isEidOver());
+  const [daysUntilClose, setDaysUntilClose] = useState("00");
+  const [hoursUntilClose, setHoursUntilClose] = useState("00");
+  const [minutesUntilClose, setMinutesUntilClose] = useState("00");
+  const [secondsUntilClose, setSecondsUntilClose] = useState("00");
+  
   const audioRef = useRef(null);
   const celebrationTimerRef = useRef(null);
   const timerRef = useRef(null);
@@ -271,6 +300,43 @@ const App = () => {
       }, 200000);
     }
   }, [currentTime, showEidMessage]);
+
+  // Add this new useEffect for the site closing countdown
+  useEffect(() => {
+    if (!eidMode) return;
+    
+    const updateClosingCountdown = () => {
+      const now = new Date();
+      const eidEndDate = new Date("2025-04-03");
+      eidEndDate.setHours(23, 59, 59, 999);
+      
+      // Check if Eid is over
+      if (now > eidEndDate && !eidOver) {
+        setEidOver(true);
+      }
+      
+      // If Eid is still ongoing, count down to end of Eid
+      // Otherwise, count down to next Ramadan
+      const targetDate = eidOver ? getNextRamadanDate() : eidEndDate;
+      const difference = targetDate - now;
+      
+      // Calculate time units
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+      
+      setDaysUntilClose(String(days).padStart(2, "0"));
+      setHoursUntilClose(String(hours).padStart(2, "0"));
+      setMinutesUntilClose(String(minutes).padStart(2, "0"));
+      setSecondsUntilClose(String(seconds).padStart(2, "0"));
+    };
+    
+    updateClosingCountdown();
+    const closingTimer = setInterval(updateClosingCountdown, 1000);
+    
+    return () => clearInterval(closingTimer);
+  }, [eidMode, eidOver]);
 
   useEffect(() => {
     const updateEventTimes = () => {
@@ -483,24 +549,63 @@ const App = () => {
           <p className="eid-subtitle">{t.eidMessage}</p>
         </div>
         
-<div className="highlight-box eid-highlight">
-  <p><FaCalendarAlt className="icon" /> {t.eidTitle}</p>
-  <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-  <p><FaPray className="icon" /> Eid Prayer: {eidPrayerTimeString}</p>
-  <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
-</div>
-        
-        <div className="eid-cards">
-          <div className="card eid-card">
-            <h3><FaPray className="icon" /> {t.eidDuas[0]}</h3>
-            <p className="dua-text">{t.eidDuas[1]}</p>
-            <p className="dua-text arabic-text">{t.eidDuas[2]}</p>
-            <p className="dua-text">{t.eidDuas[3]}</p>
-          </div>
+        <div className="highlight-box eid-highlight">
+          <p><FaCalendarAlt className="icon" /> {t.eidTitle}</p>
+          <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
+          <p><FaPray className="icon" /> {t.eidPrayer} {eidPrayerTimeString}</p>
+          <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
         </div>
         
-        <div className="feature-cards">
-          <div className="card eid-tips-card">
+        {/* Add the closing countdown section */}
+        {eidOver ? (
+          <div className="closing-countdown">
+            <h2><FaCalendarCheck className="icon" /> {t.untilNextRamadan}</h2>
+            <p className="closing-message">{t.siteClosingMessage}</p>
+            <div className="countdown-container closing-timer">
+              <div className="time-box">
+                {daysUntilClose}
+                <span className="label">{parseInt(daysUntilClose, 10) === 1 ? t.day : t.days}</span>
+              </div>
+              <div className="time-box">
+                {hoursUntilClose}
+                <span className="label">{parseInt(hoursUntilClose, 10) === 1 ? t.hour : t.hours}</span>
+              </div>
+              <div className="time-box">
+                {minutesUntilClose}
+                <span className="label">{parseInt(minutesUntilClose, 10) === 1 ? t.minute : t.minutes}</span>
+              </div>
+              <div className="time-box">
+                {secondsUntilClose}
+                <span className="label">{parseInt(secondsUntilClose, 10) === 1 ? t.second : t.seconds}</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="closing-countdown">
+            <h2>{t.siteClosing}</h2>
+            <div className="countdown-container closing-timer">
+              <div className="time-box">
+                {daysUntilClose}
+                <span className="label">{parseInt(daysUntilClose, 10) === 1 ? t.day : t.days}</span>
+              </div>
+              <div className="time-box">
+                {hoursUntilClose}
+                <span className="label">{parseInt(hoursUntilClose, 10) === 1 ? t.hour : t.hours}</span>
+                             </div>
+              <div className="time-box">
+                {minutesUntilClose}
+                <span className="label">{parseInt(minutesUntilClose, 10) === 1 ? t.minute : t.minutes}</span>
+              </div>
+              <div className="time-box">
+                {secondsUntilClose}
+                <span className="label">{parseInt(secondsUntilClose, 10) === 1 ? t.second : t.seconds}</span>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <div className="eid-content">
+          <div className="eid-section">
             <h3><FaGift className="icon" /> {t.eidTips}</h3>
             <ul className="eid-list">
               {t.eidTipsList.map((tip, index) => (
@@ -509,8 +614,18 @@ const App = () => {
             </ul>
           </div>
           
-          <div className="card eid-activities-card">
-                        <h3><FaHandsHelping className="icon" /> {t.eidActivities}</h3>
+          <div className="eid-section">
+            <h3><FaQuran className="icon" /> {t.dailyDua}</h3>
+            <div className="dua-box">
+              <p className="arabic-text">{t.eidDuas[0]}</p>
+              <p className="dua-translation">{t.eidDuas[1]}</p>
+              <p className="arabic-text">{t.eidDuas[2]}</p>
+              <p className="dua-translation">{t.eidDuas[3]}</p>
+            </div>
+          </div>
+          
+          <div className="eid-section">
+            <h3><FaHandsHelping className="icon" /> {t.eidActivities}</h3>
             <ul className="eid-list">
               {t.eidActivitiesList.map((activity, index) => (
                 <li key={index}>{activity}</li>
@@ -519,51 +634,18 @@ const App = () => {
           </div>
         </div>
         
-        <div className="quote-box eid-quote">
-          <p className="quote">{t.eidDescription}</p>
-        </div>
-        
-        <div className="action-buttons">
-          <button 
-            className="action-button"
-            onClick={() => setShowQuranPopup(true)}
-          >
-            <FaQuran className="icon" /> Quran Verse
-          </button>
-          
-          <button 
-            className="action-button info-button"
-            onClick={() => window.open("https://islamqa.info/en/categories/very-important/eid", "_blank")}
-          >
-            <FaInfoCircle className="icon" /> Eid Guide
-          </button>
-        </div>
-        
-        {showQuranPopup && (
-          <div className="popup-overlay">
-            <div className="popup-content">
-              <button className="close-button" onClick={() => setShowQuranPopup(false)}>×</button>
-              <h2>Quran Verse for Eid</h2>
-              <p className="arabic-text">
-                وَلِتُكْمِلُوا الْعِدَّةَ وَلِتُكَبِّرُوا اللَّهَ عَلَىٰ مَا هَدَاكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ
-              </p>
-              <p>
-                "And [wants] for you to complete the period and to glorify Allah for that [to] which He has guided you; and perhaps you will be grateful." (Al-Baqarah 2:185)
-              </p>
-            </div>
-          </div>
-        )}
-        
         <footer className="footer">
-          {t.footer}
+          <p>{t.footer}</p>
+          <p><FaInfoCircle className="icon" /> {t.locationNote}</p>
         </footer>
       </div>
     );
   }
-  // Regular Ramadan mode UI
+
   return (
     <div className={`container ${language === 'ar' ? 'rtl' : 'ltr'} ${darkMode ? 'dark-mode' : ''}`}>
-      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} />}
+      {showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={true} numberOfPieces={500} />}
+      <audio ref={audioRef} src={countdownSound} loop />
       
       <div className="app-controls">
         <button 
@@ -582,101 +664,88 @@ const App = () => {
         </button>
       </div>
       
-      <h1 className="title">
-        {isTimeReached ? `${t[celebrationEvent]} ${t.titleTime}` : `${t.title} ${t[targetEvent]}`}
-      </h1>
-      <div className="countdown-container">
-        <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
-          {isTimeReached ? "00" : hours}
-          <span className="label">{hoursNum === 1 ? t.hour : t.hours}</span>
-        </div>
-        <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
-          {isTimeReached ? "00" : minutes}
-          <span className="label">{minutesNum === 1 ? t.minute : t.minutes}</span>
-        </div>
-        <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
-          {isTimeReached ? "00" : seconds}
-          <span className="label">{secondsNum === 1 ? t.second : t.seconds}</span>
-        </div>
-      </div>
-      
-      <div className={`location-note-highlight ${language === 'ar' ? 'rtl' : 'ltr'}`}>
-        <FaInfoCircle className="note-highlight-icon" />
-        <span className="note-highlight-text">{t.locationNote}</span>
+      <div className="header">
+        {isTimeReached ? (
+          <h1 className="title">
+            {t.itsTime} {t[celebrationEvent]} {t.titleTime}
+          </h1>
+        ) : (
+          <h1 className="title">
+            {t.title} {t[targetEvent]} {t.titleTime}
+          </h1>
+        )}
       </div>
       
       <div className="highlight-box">
         <p><FaCalendarAlt className="icon" /> {t.ramadanDay} {ramadanDay}</p>
         <p><FaClock className="icon" /> {t.currentTime} {currentTimeString}</p>
-        <p className="prayer-times">
-          <span><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</span>
-          <span><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</span>
-        </p>
+        <p><FaCloudSun className="icon" /> {t.imsakLabel} {imsakTimeString}</p>
+        <p><FaCloudMoon className="icon" /> {t.iftarLabel} {iftarTimeString}</p>
         <p><FaMapMarkerAlt className="icon" /> {t.location}</p>
       </div>
       
-      <p className="message">
-        {isTimeReached 
-          ? (celebrationEvent === "imsak" ? t.imsakMessage : t.iftarMessage)
-          : `${targetEvent === "imsak" ? t.imsakCountdown : t.iftarCountdown} ${t.comingSoon}`}
-      </p>
+      {isTimeReached ? (
+        <div className="message-box">
+          <p className="celebration-message">
+            {celebrationEvent === "imsak" ? t.imsakMessage : t.iftarMessage}
+          </p>
+        </div>
+      ) : (
+        <div className="countdown-container">
+          <div className="time-box">
+            {hours}
+            <span className="label">{hoursNum === 1 ? t.hour : t.hours}</span>
+          </div>
+          <div className="time-box">
+            {minutes}
+            <span className="label">{minutesNum === 1 ? t.minute : t.minutes}</span>
+          </div>
+          <div className={`time-box ${isFlashing ? 'flashing' : ''}`}>
+            {seconds}
+            <span className="label">{secondsNum === 1 ? t.second : t.seconds}</span>
+          </div>
+        </div>
+      )}
       
-      <div className="feature-cards">
-        <div className="card dua-card">
+      <div className="message-box">
+        <p className="countdown-message">
+          {!isTimeReached && (
+            targetEvent === "imsak" ? t.imsakCountdown : t.iftarCountdown
+          )} {!isTimeReached && t.comingSoon}
+        </p>
+      </div>
+      
+      <div className="info-container">
+        <div className="info-box">
           <h3><FaQuran className="icon" /> {t.dailyDua}</h3>
-          <p className="dua-text">{t.duas[dailyDuaIndex]}</p>
+          <div className="dua-box">
+            <p className="arabic-text">{t.duas[dailyDuaIndex]}</p>
+            <p className="dua-translation">{t.duas[dailyDuaIndex + 1]}</p>
+          </div>
         </div>
         
-        <div className="card tip-card">
-          <h3><FaInfoCircle className="icon" style={{ marginRight: '8px' }} /> {t.todaysFastingTip}</h3>
+        <div className="info-box">
+          <h3><FaInfoCircle className="icon" /> {t.todaysFastingTip}</h3>
           <p>{t.fastingTips[dailyTipIndex]}</p>
         </div>
       </div>
       
-      <div className="quote-box">
-        <p className="quote">{t.inspirationalQuote}</p>
-      </div>
-      
-      <div className="weather-info">
-        <p><FaTemperatureHigh className="icon" style={{ marginRight: '5px' }} /> {t.weatherInfo}</p>
-      </div>
-      
       {showQuranPopup && (
-        <div className="popup-overlay">
+        <div className="popup">
           <div className="popup-content">
-            <button className="close-button" onClick={() => setShowQuranPopup(false)}>×</button>
-            <h2>Quran Verse of the Day</h2>
-            
-            <p className="arabic-text">
-              شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ وَبَيِّنَاتٍ مِّنَ الْهُدَىٰ وَالْفُرْقَانِ
-            </p>
-            <p>
-              "The month of Ramadan is that in which was revealed the Quran, a guidance for mankind and clear proofs for guidance and criterion." (Al-Baqarah 2:185)
-            </p>
+            <h3>{t.inspirationalQuote}</h3>
+            <button onClick={() => setShowQuranPopup(false)}>Close</button>
           </div>
         </div>
       )}
-      <div className="action-buttons">
-        <button 
-          className="action-button"
-          onClick={() => setShowQuranPopup(true)}
-        >
-          <FaQuran className="icon" /> Quran Verse
-        </button>
-        
-        <button 
-          className="action-button info-button"
-          onClick={() => window.open("https://islamqa.info/en/categories/very-important/ramadan", "_blank")}
-        >
-          <FaInfoCircle className="icon" /> Ramadan Guide
-        </button>
-      </div>
-      <audio ref={audioRef} src={countdownSound} loop />
+      
       <footer className="footer">
-        {t.footer}
+        <p>{t.footer}</p>
+        <p><FaInfoCircle className="icon" /> {t.locationNote}</p>
       </footer>
     </div>
   );
 };
 
 export default App;
+
